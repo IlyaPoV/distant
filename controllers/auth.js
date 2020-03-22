@@ -5,12 +5,19 @@ const keys = require('../config/keys')
 const errorHendler = require('../utils/erorhendler')
 
 module.exports.login = async function(req,res){
+    if(req.body.password.length<6){
+        res.status(406).json({
+            message: 'Пароль должен быть длиннее 6 символов'
+        })
+    }
+    
     const candidate = await User.findOne({
         email: req.body.email
     })
     if(candidate){
         //ok. lets check pass
         const passwordResult = bcrypt.compareSync(req.body.password, candidate.password)
+        
         if(passwordResult){
             const token = jwt.sign({
                 email:candidate.email,
@@ -33,6 +40,7 @@ module.exports.login = async function(req,res){
 }
 
 module.exports.register = async function(req,res){
+    
     const candidate = await User.findOne({email: req.body.email})
     if(candidate){
         //пользователь найден, отдать ошибку
@@ -42,9 +50,13 @@ module.exports.register = async function(req,res){
     }else{
         const salt = bcrypt.genSaltSync(10);
         const password = req.body.password;
+        const userName = req.body.userName;
+        const userSurname = req.body.userSurname;
         const user = new User({
             email:req.body.email,
-            password: bcrypt.hashSync(password,salt)
+            password: bcrypt.hashSync(password,salt),
+            userName: userName,
+            userSurname: userSurname
         })
         
         try{

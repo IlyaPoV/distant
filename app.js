@@ -14,7 +14,9 @@ const app = express();
 
 mongoose.connect(keys.mongo_uri, { useNewUrlParser: true , useUnifiedTopology: true, useCreateIndex: true})
     .then(()=>console.log("allright"))    
-//
+
+
+app.use(express.json({extended:true}))
 app.use(passport.initialize())
 require('./middleware/passport')
 app.use(morgan('dev'));

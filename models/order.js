@@ -30,3 +30,5 @@ const orderSchema = new Schema({
         type: Schema.Types.ObjectId
     }
 })
+
+module.exports = mongoose.model('order', orderSchema)
