@@ -1,4 +1,4 @@
-const Order = require('../models/order')
+const Lesson = require('../models/lesson')
 const errorHendler = require('../utils/erorhendler')
 
 module.exports.getAll = async function(req, res){
@@ -25,7 +25,7 @@ module.exports.getAll = async function(req, res){
     }
 
     try {
-        const orders = await Order
+        const orders = await Lesson
         .find(query)
         .sort({date: -1})
         .skip(+req.query.offset)
@@ -37,16 +37,17 @@ module.exports.getAll = async function(req, res){
 }
 module.exports.create = async function(req, res){
     try{
-        const lastOrder = await Order
+        const lastOrder = await Lesson
         .findOne({user: req.user.id})
         .sort({date:-1})
 
         const maxOrder = lastOrder ? lastOrder.order : 0;
 
-        const order = await new Order({
+        const order = await new Lesson({
             list: req.body.list,
             user: req.user.id,
-            order: maxOrder + 1
+            order: maxOrder + 1,
+            title: req.body.title
         }).save()
         res.status(200).json(order)
     }catch(e){

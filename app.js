@@ -10,6 +10,7 @@ const analyticsRoutes = require('./routs/analytics');
 const categoryRoutes = require('./routs/category');
 const orderRoutes = require('./routs/order');
 const positionRoutes = require('./routs/position');
+const groups = require('./routs/groups')
 const app = express();
 
 mongoose.connect(keys.mongo_uri, { useNewUrlParser: true , useUnifiedTopology: true, useCreateIndex: true})
@@ -30,5 +31,6 @@ app.use('/api/analytics', analyticsRoutes);
 app.use('/api/category', categoryRoutes);
 app.use('/api/order', orderRoutes);
 app.use('/api/position', positionRoutes);
+app.use('/api/groups', groups);
 
 module.exports = app;
