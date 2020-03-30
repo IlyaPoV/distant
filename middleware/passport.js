@@ -14,7 +14,7 @@ module.exports = passport => {
         new JwtStratagy(options, async (payload, done)=>{
             
             try {
-            const user = await User.findById(payload.userId).select('email id userName')
+            const user = await User.findById(payload.userId).select('email id userName isTeacher isAdmin groupsList')
 
             if(user){
                 done(null, user)

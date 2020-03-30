@@ -6,14 +6,10 @@ const groupSchema = new Schema({
         type: String,
         required: true
     },
-    lessons: [
-        {
-            lesson: {
-                ref:'lesson',
-                type: Schema.Types.ObjectId
-            }
-        }
-    ],  
+    discordId: {
+        type: String,
+        default:""
+    },  
     teacher: {
         ref: 'users',
         type: Schema.Types.Mixed
@@ -21,6 +17,9 @@ const groupSchema = new Schema({
     teacherId: {
         ref: 'users',
         type: Schema.Types.ObjectId
+    },
+    schedule: {
+        type: String
     }
 });
 

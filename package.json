@@ -4,15 +4,15 @@
   "description": "polonikov@yescompany.ru",
   "main": "index.js",
   "scripts": {
-    "start": "node index",
+    "start": "cross-env NODE_ENV=production node index",
     "server": "nodemon index",
     "client-install": "npm i --prefix client",
     "client": "npm run start --prefix client",
-    "dev": "concurrently \"npm run server\" \"npm run client\""
+    "dev": "cross-env NODE_ENV=development concurrently \"npm run server\" \"npm run client\""
   },
   "keywords": [
     "express",
-    "angular"
+    "react"
   ],
   "author": "Ilya Polonikov",
   "license": "ISC",
@@ -31,6 +31,7 @@
   },
   "devDependencies": {
     "concurrently": "^5.0.0",
+    "cross-env": "^7.0.2",
     "nodemon": "^2.0.2"
   }
 }

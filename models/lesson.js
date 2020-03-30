@@ -14,7 +14,7 @@ const lessonSchema = new Schema({
         type: String,
         required: true
     },
-    list: [
+    tasksList: [
         {
             name:{
                 type: String,
@@ -26,10 +26,6 @@ const lessonSchema = new Schema({
             },
         }
     ],
-    user: {
-        ref:'users',
-        type: Schema.Types.ObjectId
-    },
     group:{
         ref: 'groups',
         type: Schema.Types.ObjectId

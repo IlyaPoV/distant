@@ -6,16 +6,17 @@ const cors = require('cors');
 const morgan = require('morgan');
 const keys = require('./config/keys')
 const authRoutes = require('./routs/auth');
-const analyticsRoutes = require('./routs/analytics');
 const categoryRoutes = require('./routs/category');
-const orderRoutes = require('./routs/order');
 const positionRoutes = require('./routs/position');
 const groups = require('./routs/groups')
+const users = require('./routs/users')
+const lesson = require('./routs/lesson')
+const task = require('./routs/tasks')
 const app = express();
+const path = require('path')
 
 mongoose.connect(keys.mongo_uri, { useNewUrlParser: true , useUnifiedTopology: true, useCreateIndex: true})
     .then(()=>console.log("allright"))    
-
 
 app.use(express.json({extended:true}))
 app.use(passport.initialize())
@@ -27,10 +28,20 @@ app.use(bodyParser.urlencoded({extended:true}))
 app.use(bodyParser.json())
 
 app.use('/api/auth', authRoutes);
-app.use('/api/analytics', analyticsRoutes);
 app.use('/api/category', categoryRoutes);
-app.use('/api/order', orderRoutes);
 app.use('/api/position', positionRoutes);
 app.use('/api/groups', groups);
+app.use('/api/user', users);
+app.use('/api/lesson', lesson);
+app.use('/api/task', task);
+
+if(process.env.NODE_ENV === 'production') {
+    app.use('/', express.static(path.join(__dirname, 'client', 'build')));
+
+    app.get('*', (req,res)=>{
+        res.sendFile(path.resolve(__dirname,'client', 'build', 'index.html'));
+    })
+}
+
 
 module.exports = app;

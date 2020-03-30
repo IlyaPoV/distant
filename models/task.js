@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
-const orderSchema = new Schema({
+const taskSchema = new Schema({
     date: {
         type: Date,
         default: Date.now
@@ -10,25 +10,25 @@ const orderSchema = new Schema({
         type: Number,
         required: true
     },
-    list: [
+    title: {
+        type: String
+    },
+    tasksList: [
         {
             name:{
                 type: String,
                 require: true
             },
-            quantity: {
-                type: Number,
+            task: {
+                type: String,
                 require: true
             },
-            cost: {
-                type: Number
-            }
         }
     ],
-    user: {
-        ref:'users',
+    lesson:{
+        ref: 'lesson',
         type: Schema.Types.ObjectId
     }
 })
 
-module.exports = mongoose.model('order', orderSchema)
+module.exports = mongoose.model('task', taskSchema)
